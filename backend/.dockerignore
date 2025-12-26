@@ -1,0 +1,11 @@
+# Backend .dockerignore
+target/
+!target/*.jar
+.mvn/
+mvnw
+mvnw.cmd
+*.iml
+.idea/
+.settings/
+.project
+.classpath
