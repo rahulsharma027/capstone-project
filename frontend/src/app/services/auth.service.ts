@@ -13,26 +13,21 @@ export class AuthService {
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.loadUserFromToken();
-    }
+    this.loadUserFromToken();
   }
 
   login(credentials: LoginRequest): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(`${this.apiUrl}/signin`, credentials).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify({
+        const user = {
           id: response.id,
           username: response.username,
-          email: response.email
-        }));
-        this.currentUserSubject.next({
-          id: response.id,
-          username: response.username,
-          email: response.email
-        });
+          email: response.email,
+          roles: response.roles
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+        this.currentUserSubject.next(user);
       })
     );
   }

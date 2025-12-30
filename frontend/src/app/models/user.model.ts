@@ -4,6 +4,7 @@ export interface User {
   email: string;
   fullName: string;
   phoneNumber?: string;
+  roles: string[];
 }
 
 export interface LoginRequest {
@@ -25,4 +26,5 @@ export interface JwtResponse {
   id: number;
   username: string;
   email: string;
+  roles: string[];
 }
